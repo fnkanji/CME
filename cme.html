@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+
+
+<!HTML piece>
+<html>
+    
+    <head>
+        <title>Welcome to CME!</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link href='http://fonts.googleapis.com/css?family=BenchNine:400,700' rel='stylesheet' type='text/css'>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+			
+		    <!-- Beginning of content that makes up the main part of the page -->
+			<div class="content">
+				<div id="ei_menu" class="ei_menu">
+					<ul>
+						
+<!-- 						First sliding panel for fuel savings graph -->
+                        <li id="firstPanel">
+                            <a href="#" class="pos1">
+                                <span class="ei_preview"></span>
+                                <span class="ei_image"></span>
+                            </a>
+                            <div class="calc_descr" id="calcPanel">
+                                <div id="breaks">
+                                    <br><br><br>
+                                </div>
+                                <h2 id="calc_header"><strong>CALCULATOR</strong></h2>
+                                <div id="breaks2">
+                                    <br><br><br><br>
+                                </div>
+                                <!-- <p> -->
+                                <style>
+	                                .grid .tick {
+										    stroke: lightgrey;
+										    opacity: 0.7;
+										}
+										.grid path {
+										      stroke-width: 0;
+										}
+                                    form label{
+                                        display: inline-block;
+                                        width: 125px;
+                                        font-size:11px;
+                                    }
+                                </style>
+                                <style>
+                                    input[type=text] {padding:2px; 
+                                    	width:40px;
+                                        height:21px;
+                                    	color: #111;
+                                    }
+
+                                    input[type=text]:focus {border-color:#333; color:#111;}
+                                    input[type=submit] {
+                                    	border-radius: 20px;
+                                        cursor:pointer;
+                                        font-weight:bold;
+                                        color:#181818;
+                                        text-shadow:1px 1px 0px #ffffff;
+                                        width:100px;}
+
+                                    input[type=submit]:hover {
+										background-color:#dfdfdf;
+									}input[type=submit]:active {
+										position:relative;
+										top:1px;
+									}
+
+
+
+                                </style>
+                                
+                                	<div id="dropdowns">
+                                        <form name="myform">VESSEL TYPE:
+                                            <span hidden id="hidden1"><br></span>
+                                            <select name="myTypes" id="typeList" onchange="setOptions(document.myform.myTypes.options[document.myform.myTypes.selectedIndex].value);">
+                                                <option value="none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                                <option value="COT">Crude Oil Tanker</option>
+                                                <option value="PT">Product Tanker</option>
+                                                <option value="CT">Chemical Tanker</option>
+                                                <option value="LPGT">LPG Tanker</option>
+                                                <option value="LNGT">LNG Tanker</option>
+                                                <option value="OT">Other Tanker</option>
+                                                <option value="B">Bulk</option>
+                                                <option value="GC">General Cargo</option>
+                                                <option value="OD">Other Dry</option>
+                                                <option value="C">Container</option>
+                                                <option value="V">Vehicle</option>
+                                                <option value="R">Roro</option>
+                                            </select>
+                                            <span hidden id="hiddenbreak">
+                                                <br>
+                                            </span>
+                                            <span id="space"> &nbsp;&nbsp;</span>
+                                            VESSEL SIZE:
+                                            <span hidden id="hidden2"><br></span>
+                                            <select id="ss" name="shipsize" size="1" onchange="setPower(document.myform.shipsize.options[document.myform.shipsize.selectedIndex].value);">
+                                                <option value=" ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                            </select><br>
+                                            <div id="hiddenbreak2">
+                                                <br><br>
+                                            </div>
+                                            <center>
+                                            <button id="getstats" type="button" onclick="changeCalc()">Get my stats</button>
+                                        </center>
+
+                                        </form>
+                                    </div>
+ 
+                                        <form onsubmit="updateGraph(); return false;">
+                                                <br>
+                                                <label for="sl4"><span hidden id="goAway2">Installed Power:</span></label>
+                                                <input hidden type="text" name="sl4" id="sl4" style="width:40px;"><span hidden id="goAway10">&nbsp;MW</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl5"><span hidden id="goAway3" class="goAway">Operating Days a Year:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+                                                <input hidden type="text" name="sl5" id="sl5" style="width:40px;"><span hidden id="goAway11">&nbsp;days</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl6"><span hidden id="goAway4">Design Speed:</span></label>
+                                                <input hidden type="text" name="sl6" id="sl6" style="width:40px;"><span hidden id="goAway12">&nbsp;kts</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl7"><span hidden id="goAway5">Operating Speed:</span></label>
+                                                <input hidden type="text" name="sl7" id="sl7" style="width:40px;"><span hidden id="goAway13">&nbsp;kts</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl8"><span hidden id="goAway6">Daily Fuel Consumption:&nbsp;&nbsp;&nbsp;</span></label>
+                                                <input hidden type="text" name="sl8" id="sl8" style="width:40px;" readonly><span hidden id="goAway14">&nbsp;mt</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl9"><span hidden id="goAway7">HFO:</span></label>
+                                                <input hidden type="text" name="sl9" id="sl9" style="width:40px;"><span hidden id="goAway15">&nbsp;$/mt</span>
+                                                <br>
+                                                <br>
+                                                
+                                                <label for="sl10"><span hidden id="goAway16">LNG:</span></label>
+                                                <input hidden type="text" name="sl10" id="sl10" style="width:40px;"><span hidden id="goAway19">&nbsp;$/mt</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl11"><span hidden id="goAway17">LSMGO:</span></label>
+                                                <input hidden type="text" name="sl11" id="sl11" style="width:40px;"><span hidden id="goAway20">&nbsp;$/mt</span>
+                                                <br>
+                                                <br>
+                                                <label for="sl12"><span hidden id="goAway18">Scrubber (HFO):</span></label>
+                                                <input hidden type="text" name="sl12" id="sl12" style="width:40px;"><span hidden id="goAway21">&nbsp;$/mt</span>
+                                                <br>
+                                                <br>
+                                                
+                                                <input hidden type="submit" value="Calculate" id="goAway8">
+                                        </form>
+                                <!-- </p> -->
+                            </div>
+                        </li>
+						
+<!-- 						Second sliding panel for emissions graph-->						
+						<li>
+							<a href="#" class="pos2">
+								<span class="ei_preview"></span>
+								<span class="ei_image"></span>
+							</a>
+							<div class="ei_descr" id="grph1">
+							</div>
+						</li>
+
+                        <li>
+                            <a href="#" class="pos3">
+                                <span class="ei_preview"></span>
+                                <span class="ei_image"></span>
+                            </a>
+                            <div class="ei_descr2" id="grph2">
+                                <!-- <h2>FUEL EMISSIONS</h2> -->
+                            </div>
+                        </li>
+
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!-- The JavaScript -->
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.js"></script>
+        <script src="jquery.popupoverlay.js"></script>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+        <script type="text/javascript">
+        	var clickable = false;
+            var chose = false;
+            var show_graphic = true;
+			$(function() {
+				
+                var panel_width = '1000px';
+                var $menu				= $('#ei_menu > ul'),
+					$menuItems			= $menu.children('li'),
+					$menuItemsImgWrapper= $menuItems.children('a'),
+					$menuItemsPreview	= $menuItemsImgWrapper.children('.ei_preview'),
+					totalMenuItems		= $menuItems.length,
+					thisArray = [1, 0, 0];
+				
+					ExpandingMenu 	= (function(){
+						/*
+							@current
+							set it to the index of the element you want to be opened by default,
+							or -1 if you want the menu to be closed initially
+						 */
+						var current				= 0,
+						/*
+							@anim
+							if we want the default opened item to animate initialy set this to true
+						 */
+						anim				= true,
+						/*
+							checks if the current value is valid -
+							between 0 and the number of items
+						 */
+						validCurrent		= function() {
+							return (current >= 0 && current < totalMenuItems);
+						},
+						init				= function() {
+								/* show default item if current is set to a valid index */
+							if(validCurrent())
+								configureMenu();
+
+							$( ".pos1" ).click(function () {
+                                panel_width = '280px';
+                            });
+                            $( ".pos2" ).click(function () {
+                                panel_width = '500px';
+                            });
+                            $( ".pos3" ).click(function () {
+                                panel_width = '800px';
+                            });
+                            initEventsHandler();
+
+                                // collapses calc bar once you have input initial values
+                                $( "#getstats" ).click(function() {
+                                    var chosen_func = document.myform.myTypes.options[document.myform.myTypes.selectedIndex].value;
+
+                                    if(chosen_func=="none"){
+                                        alert("Please select at least one option first.");
+                                    }else{
+                                        chose=true;
+                                        changeCalc();
+                                        panel_width = '500px';
+                                        slideOutItem($menuItems.eq(0), false, 3000, 'easeOutQuint', true);
+                                        
+                                        slideOutItem($menuItems.eq(1), true, 250, 'jswing');
+                                        panel_width = '800px';
+                                        slideOutItem($menuItems.eq(2), true, 250, 'jswing');
+                                        thisArray = [0, 1, 1];
+                                    }
+
+
+                                });
+
+
+
+
+						},
+						configureMenu		= function() {
+								/* get the item for the current */
+							var $item	= $menuItems.eq(current);
+								/* if anim is true slide out the item */
+							if(anim)
+								slideOutItem($item, true, 900, 'easeInQuint');
+							else{
+									/* if not just show it */
+								$item.css({width : '900px'})
+								.find('.ei_image')
+								.css({left:'0px', opacity:1});
+
+									/* decrease the opacity of the others DO I WANT THIS?! */
+									$menuItems.not($item)
+											  .children('.ei_preview')
+											  .css({opacity:0.6});
+							}
+						},
+						initEventsHandler	= function() {
+								/*
+								when we click an item the following can happen:
+								1) The item is already opened - close it!
+								2) The item is closed - open it! (if another one is opened, close it!)
+								*/
+							$menuItemsImgWrapper.bind('click.ExpandingMenu', function(e) {
+								if(clickable){
+									var $this 	= $(this).parent(),
+									idx		= $this.index();
+
+									if(thisArray[idx] == 1) {
+										slideOutItem($menuItems.eq(idx), false, 1500, 'easeOutQuint');
+										thisArray[idx]=0;
+										//current = -1;
+									}
+									else{
+										
+										// changed to true that can have multiple open at once
+											slideOutItem($menuItems.eq(idx), true, 250, 'jswing');
+											thisArray[idx]=1;
+									}
+
+
+                                    if(thisArray[0]==1 & thisArray[1]==1){
+                                        show_graphic = false;
+                                    }else{
+                                        show_graphic = true;
+                                    }
+                                    update2();
+                                    
+									return false;
+								}
+								
+							});
+						},
+							/* if you want to trigger the action to open a specific item */
+							openItem			= function(idx) {
+								$menuItemsImgWrapper.eq(idx).click();
+							},
+							/*
+							opens or closes an item
+							note that "mLeave" is just true when all the items close,
+							in which case we want that all of them get opacity 1 again.
+							"dir" tells us if we are opening or closing an item (true | false)
+							*/
+						slideOutItem		= function($item, dir, speed, easing, mLeave) {
+							var $ei_image	= $item.find('.ei_image'),
+
+                            //where I changed distance that panel goes out to
+                            //where I changed the width to variable so it can change dynamically
+							itemParam	= (dir) ? {width : panel_width} : {width : '58px'},
+							imageParam	= {left : '0px'}
+
+								/*
+								if opening, we animate the opacity of all the elements to 0.1.
+								this is to give focus on the opened item.. - AGAIN DO WE WANT THIS?
+								*/
+							if(dir)
+							/*
+									alternative:
+									$menuItemsPreview.not($menuItemsPreview.eq(current))
+													 .stop()
+													 .animate({opacity:0.1}, 500);
+							 */
+								$menuItemsPreview.stop()
+							.animate({opacity:0.6}, 1000);
+							else if(mLeave)
+								$menuItemsPreview.stop()
+							.animate({opacity:1}, 1500);
+
+								/* the <li> expands or collapses */
+							$item.stop().animate(itemParam, speed, easing);
+								/* the image (color) slides in or out */
+							$ei_image.stop().animate(imageParam, 0, easing, function() {
+									/*
+									if opening, we animate the opacity to 1,
+									otherwise we reset it.
+									*/
+								if(dir)
+									$ei_image.animate({opacity:1}, 2000);
+								else
+									$ei_image.animate({opacity:0.3}, 2000);;
+							});
+						};
+
+						return {
+							init 		: init,
+							openItem	: openItem
+						};
+					})();
+					
+				/*
+				call the init method of ExpandingMenu
+				*/
+				ExpandingMenu.init();
+			
+			/*
+			if later on you want to open / close a specific item you could do it like so:
+			ExpandingMenu.openItem(3); // toggles item 3 (zero-based indexing)
+			*/
+			
+
+            });
+        </script>
+        
+
+        <script src="js/dropdown.js"></script>
+
+        <script src="js/calc_Change.js"></script>
+
+        <script src="js/calculator.js"></script>
+
+        <script src="js/fuel_functions.js"></script>
+                
+
+    </body>
+</html>
