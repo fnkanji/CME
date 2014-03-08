@@ -618,7 +618,13 @@ the_key2.attr("display", "none");
     					rect_today2.transition()
     						.attr("opacity",0.7);
     					text_today2.attr("y", function(d){return(y2(rect_value_today)-10)})
-							.text(addCommas(rect_value_today.toFixed(2))+" " + rect_units);
+							.text(function(d){
+								if(pm){
+									return (addCommas(rect_value_today.toFixed(2))+" " + rect_units);
+								}else{
+									return (addCommas(rect_value_today.toFixed(0))+" " + rect_units);
+								}
+						});
     				})
     				.on("mouseout", function(){
     					rect_today2.transition()
@@ -643,7 +649,13 @@ the_key2.attr("display", "none");
 
     					lng2_text.attr("y", function(d){return(y2(rect_value_lng)-10)})
 							//.attr("x", lng2_x-13)
-							.text(addCommas(rect_value_lng.toFixed(2))+" " +rect_units);
+							.text(function(d){
+								if(pm){
+									return (addCommas(rect_value_lng.toFixed(2))+" " + rect_units);
+								}else{
+									return (addCommas(rect_value_lng.toFixed(0))+" " + rect_units);
+								}
+						});
     				})
     				.on("mouseout", function(){
     					rect_lng2.transition()
@@ -667,7 +679,13 @@ the_key2.attr("display", "none");
 
     					lsmgo2_text.attr("y", function(d){return(y2(rect_value_lsmgo)-10)})
 							//.attr("x", lsmgo2_x-13)
-							.text(addCommas(rect_value_lsmgo.toFixed(2))+" " +rect_units);
+							.text(function(d){
+								if(pm){
+									return (addCommas(rect_value_lsmgo.toFixed(2))+" " + rect_units);
+								}else{
+									return (addCommas(rect_value_lsmgo.toFixed(0))+" " + rect_units);
+								}
+						});
     				})
     				.on("mouseout", function(){
     					rect_lsmgo2.transition()
@@ -692,7 +710,13 @@ the_key2.attr("display", "none");
 
     				scrubber2_text.attr("y", function(d){return(y2(rect_value_scrubber)-10)})
 							//.attr("x", scrubber2_x-13)
-							.text(addCommas(rect_value_scrubber.toFixed(2))+" " +rect_units);
+							.text(function(d){
+								if(pm){
+									return (addCommas(rect_value_scrubber.toFixed(2))+" " + rect_units);
+								}else{
+									return (addCommas(rect_value_scrubber.toFixed(0))+" " + rect_units);
+								}
+						});
     				})
     				.on("mouseout", function(){
     					rect_scrubber2.transition()
@@ -725,13 +749,13 @@ the_key2.attr("display", "none");
 
        	//axis text.
         var text_today2 = canvas2.append("text")
-						.attr("x", 67);
+						.attr("x", 76);
 
 		var lng2_text = canvas2.append("text")
-						.attr("x", 117);
+						.attr("x", 140);
 										
 		var lsmgo2_text = canvas2.append("text")
-							.attr("x", 167);
+							.attr("x", 180);
 
 		var scrubber2_text = canvas2.append("text")
 							.attr("x", 217);
