@@ -857,7 +857,9 @@ the_key2.attr("display", "none");
 
 		//function to add commas to a number.
 		function addCommas(x){
-			return Number(x).toLocaleString('en');
+			var parts = x.toString().split(".");
+		    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    return parts.join(".");
 		}
 
 
