@@ -297,7 +297,7 @@ the_key.attr("display", "none");
     					rect_today.transition()
     						.attr("opacity",0.7);
     					text_today.attr("y", function(d){return(y(annual_bill)-10)})
-							.text("$"+addCommas(annual_bill.toFixed(0)));
+							.text("$"+addCommas(parseInt(annual_bill)));
     				})
     				.on("mouseout", function(){
     					rect_today.transition()
@@ -323,7 +323,7 @@ the_key.attr("display", "none");
     						.attr("opacity",0.7);
     					lng_text.attr("y", function(d){return(y(lng_bill)-10)})
 							.attr("x", lng_x-13)
-							.text("$"+addCommas(lng_bill.toFixed(0)));
+							.text("$"+addCommas(parseInt(lng_bill)));
     				})
     				.on("mouseout", function(){
     					rect_lng.transition()
@@ -347,7 +347,7 @@ the_key.attr("display", "none");
 
     					lsmgo_text.attr("y", function(d){return(y(lsmgo_bill)-10)})
 							.attr("x", lsmgo_x-13)
-							.text("$"+addCommas(lsmgo_bill.toFixed(0)));
+							.text("$"+addCommas(parseInt(lsmgo_bill)));
     				})
     				.on("mouseout", function(){
     					rect_lsmgo.transition()
@@ -371,7 +371,7 @@ the_key.attr("display", "none");
 
     					scrubber_text.attr("y", function(d){return(y(scrubber_bill)-10)})
 							.attr("x", scrubber_x-13)
-							.text("$"+addCommas(scrubber_bill.toFixed(0)));
+							.text("$"+addCommas(parseInt(scrubber_bill)));
     				})
     				.on("mouseout", function(){
     					rect_scrubber.transition()
@@ -622,7 +622,7 @@ the_key2.attr("display", "none");
 								if(pm){
 									return (addCommas(rect_value_today.toFixed(2))+" " + rect_units);
 								}else{
-									return (addCommas(rect_value_today.toFixed(0))+" " + rect_units);
+									return (addCommas(parseInt(rect_value_today))+" " + rect_units);
 								}
 						});
     				})
@@ -653,7 +653,7 @@ the_key2.attr("display", "none");
 								if(pm){
 									return (addCommas(rect_value_lng.toFixed(2))+" " + rect_units);
 								}else{
-									return (addCommas(rect_value_lng.toFixed(0))+" " + rect_units);
+									return (addCommas(parseInt(rect_value_lng))+" " + rect_units);
 								}
 						});
     				})
@@ -683,7 +683,7 @@ the_key2.attr("display", "none");
 								if(pm){
 									return (addCommas(rect_value_lsmgo.toFixed(2))+" " + rect_units);
 								}else{
-									return (addCommas(rect_value_lsmgo.toFixed(0))+" " + rect_units);
+									return (addCommas(parseInt(rect_value_lsmgo))+" " + rect_units);
 								}
 						});
     				})
@@ -714,7 +714,7 @@ the_key2.attr("display", "none");
 								if(pm){
 									return (addCommas(rect_value_scrubber.toFixed(2))+" " + rect_units);
 								}else{
-									return (addCommas(rect_value_scrubber.toFixed(0))+" " + rect_units);
+									return (addCommas(parseInt(rect_value_scrubber))+" " + rect_units);
 								}
 						});
     				})
