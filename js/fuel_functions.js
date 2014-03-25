@@ -270,8 +270,8 @@ d3.csv("fuel_prices.csv", function (data){
 
             var lng = true;
             //document.getElementById("1").style.backgroundColor = "lightblue";
-            var lsmgo = false;
-            var scrubber = false;
+            var lsmgo = true;
+            var scrubber = true;
 
             var lng2 = true;
             //document.getElementById("1").style.backgroundColor = "lightblue";

@@ -7,7 +7,7 @@ var transitioned=false;
             transitioned=true;
             //document.getElementById("calcPanel").style.background="#437922";
             document.getElementById("calcPanel").style.width="220px";
-            document.getElementById("calc_header").style.fontSize="20px";
+            document.getElementById("calc_header").style.fontSize="16px";
             var elem = document.getElementById("breaks");
             elem.parentNode.removeChild(elem);
             var elem2 = document.getElementById("breaks2");

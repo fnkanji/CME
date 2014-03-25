@@ -62,6 +62,7 @@
 		var sox = true;
 		var nox = false;
 		var pm = false;
+		var daily;
 
 
 
@@ -869,6 +870,7 @@ the_key2.attr("display", "none");
 			var slider5 = document.getElementById("sl5").value;
 			var slider6 = document.getElementById("sl6").value;
 			var slider7 = document.getElementById("sl7").value;
+			var slider8 = document.getElementById("sl8").value;
 			var todays_p = document.getElementById("sl9").value;
 			var lng_p = document.getElementById("sl10").value;
 			var lsmgo_p = document.getElementById("sl11").value;
@@ -893,7 +895,10 @@ the_key2.attr("display", "none");
 				alert("Please make sure the Operating Speed is a number between 0 and the design speed");
 				return false;
 			}
-
+			if(slider8<=0 | isNaN(slider8)){
+				alert("Please make sure the Daily Fuel Consumption is a number greater than 0");
+				return false;
+			}
 			if(todays_p<=0 | todays_p >= 50000 | isNaN(todays_p)){
 				alert("Please make sure HFO price is a number between 0 and 50,000");
 				return false;
@@ -929,12 +934,18 @@ the_key2.attr("display", "none");
 			todays_price = document.getElementById("sl9").value;
 			lng_price = document.getElementById("sl10").value;
 			lsmgo_price = document.getElementById("sl11").value;
+			new_daily = document.getElementById("sl8").value;
 			if(document.getElementById("sl12").value == scrubber_price){
 				document.getElementById("sl12").value = todays_price;
 			}
 			scrubber_price = document.getElementById("sl12").value;
-			var slider8 = ((slider7/slider6)*(slider7/slider6)*(slider7/slider6)) * slider4 * VS * 0.0019 * 24;
-			document.getElementById("sl8").value = slider8.toFixed(2);
+			if(daily != new_daily){
+				var slider8 = new_daily;
+				daily = new_daily;
+			}else{
+				var slider8 = ((slider7/slider6)*(slider7/slider6)*(slider7/slider6)) * slider4 * VS * 0.0019 * 24;
+				document.getElementById("sl8").value = slider8.toFixed(2);
+			}
 
 			//calculate annual bills for the different fuels.
 			annual_bill = slider8 * slider5 * todays_price;
@@ -1029,6 +1040,7 @@ the_key2.attr("display", "none");
 					document.getElementById("sl10").value = lng_price;
 					document.getElementById("sl11").value = lsmgo_price;
 					document.getElementById("sl12").value = d.slider9;
+					daily = document.getElementById("sl8").value;
 
 					//update globals.
 					VS = d.VS;
